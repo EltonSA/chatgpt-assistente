@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurar API Key e Treinamento</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      margin-top: 56px; /* Adjust for the fixed navbar */
+    }
+    .navbar {
+      background-color: #007bff;
+    }
+    .navbar-brand {
+      color: #ffffff;
+      font-weight: bold;
+    }
+    .navbar-brand:hover {
+      color: #f8f9fa;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 80vh;
+    }
+    .card {
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #ffffff;
+    }
+    .card-header {
+      margin-bottom: 1.5rem;
+    }
+    .card-header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .form-group label {
+      font-weight: bold;
+    }
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <a class="navbar-brand" href="/">Assistente de Atendimento</a>
+  </nav>
+  <div class="container">
+    <div class="card shadow">
+      <div class="card-header">
+        <h1 class="text-center">Configure sua IA Assistente</h1>
+      </div>
+      <form id="configForm" action="/configure" method="POST">
+        <div class="form-group">
+          <label for="apiKey">API Key</label>
+          <input type="text" class="form-control" id="apiKey" name="apiKey" required>
+        </div>
+        <div class="form-group">
+          <label for="assistantName">Nome da Assistente</label>
+          <input type="text" class="form-control" id="assistantName" name="assistantName" required>
+        </div>
+        <div class="form-group">
+          <label for="treinamento">Comportamento</label>
+          <textarea class="form-control" id="treinamento" name="treinamento" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Salvar</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    document.getElementById('configForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+
+      const response = await fetch(form.action, {
+        method: form.method,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        window.open(result.qrCodeUrl, '_blank', 'width=400,height=400');
+        window.location.href = result.redirectUrl;
+      }
+    });
+  </script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
