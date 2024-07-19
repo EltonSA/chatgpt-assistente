@@ -25,12 +25,11 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
 - [Node.js](https://nodejs.org/en/)
 - [npm](https://www.npmjs.com/)
 - [key-openai](https://platform.openai.com/api-keys)
-- [venom-bot](npm i --save venom-bot) (https://github.com/orkestral/venom)
-- [axios](npm install axios)
+- [venom-bot](https://github.com/orkestral/venom)
 
 ## Como rodar a aplicação
 
 1. Clone este repositório:
 
 ```bash
-git clone https://github.com/seu-usuario/chatgpt-assistente.git
+git https://github.com/EltonSA/chatgpt-assistente.git
